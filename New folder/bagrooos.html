@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BagrooShop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+        }
+
+        nav a {
+            padding: 14px 20px;
+            display: block;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        #cart {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: right;
+            border: 2px solid #4CAF50;
+        }
+
+        .products {
+            display: none;
+            justify-content: space-around;
+            margin: 40px;
+        }
+
+        .product {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            max-width: 200px;
+            transition: transform 0.2s; /* Animation */
+        }
+
+        .product img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            transition: transform 0.2s; /* Animation for hover */
+        }
+
+        .product:hover img {
+            transform: scale(1.1); /* Enlarge on hover */
+        }
+
+        .product button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .product button:hover {
+            background-color: #45a049;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: white;
+            border: 2px solid #4CAF50;
+            text-align: center;
+            border-radius: 10px;
+            z-index: 1000;
+        }
+
+        .popup input {
+            margin-top: 10px;
+            padding: 5px;
+            width: 200px;
+        }
+
+        .popup button {
+            margin-top: 10px;
+            padding: 10px 20px;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 500;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .login {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .login input {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            width: 200px;
+        }
+
+        .login button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>BagrooShop</h1>
+    <div id="cart">
+        <p>Cart Total: Ksh <span id="totalPrice">0</span></p>
+        <button onclick="showCheckout()">Checkout</button>
+    </div>
+</header>
+
+<nav>
+    <a href="#" onclick="showPage('loginPage')">Login</a>
+    <a href="#" onclick="showPage('homePage')">Home</a>
+    <a href="#" onclick="showPage('helpPage')">Help</a>
+    <a href="#" onclick="showPage('aboutPage')">About Us</a>
+</nav>
+
+<!-- Login Page -->
+<section id="loginPage" class="page active">
+    <div class="login">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <p id="loginMessage" style="color:red;"></p>
+    </div>
+</section>
+
+<!-- Home Page -->
+<section id="homePage" class="page">
+    <section id="products" class="products">
+        <div class="product">
+            <img src="type.jpg" alt="Product Type">
+            <p>Price: <button class="price" onclick="addToCart(600)">600 Ksh</button></p>
+        </div>
+        <div class="product">
+            <img src="safari.jpg" alt="Product Safari">
+            <p>Price: <button class="price" onclick="addToCart(855)">855 Ksh</button></p>
+        </div>
+        <div class="product">
+            <img src="moon.jpg" alt="Product Moon">
+            <p>Price: <button class="price" onclick="addToCart(960)">960 Ksh</button></p>
+        </div>
+        <div class="product">
+            <img src="laptop.jpg" alt="Product Laptop">
+            <p>Price: <button class="price" onclick="addToCart(695)">695 Ksh</button></p>
+        </div>
+    </section>
+</section>
+
+<!-- Help Page -->
+<section id="helpPage" class="page">
+    <div style="text-align: center; margin-top: 50px;">
+        <h2>Help</h2>
+        <p>Email: murigikiboko@gmail.com</p>
+        <p>Tel: 0797141277</p>
+    </div>
+</section>
+
+<!-- About Us Page -->
+<section id="aboutPage" class="page">
+    <div style="text-align: center; margin-top: 50px;">
+        <h2>About Us</h2>
+        <p>BagrooShop is a leading online retailer of quality products.</p>
+        <p>We offer a wide range of items from electronics to household products.</p>
+        <p>Our commitment is to provide the best customer service.</p>
+        <p>We ensure timely delivery and affordable pricing.</p>
+        <p>Trust BagrooShop for all your shopping needs.</p>
+    </div>
+</section>
+
+<!-- Checkout Popup -->
+<div id="checkoutPopup" class="popup">
+    <h3>Checkout</h3>
+    <p>Total Amount: Ksh <span id="checkoutTotal">0</span></p>
+    <label for="mpesaNumber">Enter your Mpesa number:</label>
+    <input type="text" id="mpesaNumber" placeholder="Enter Mpesa number">
+    <br>
+    <button onclick="confirmPayment()">Confirm Payment</button>
+</div>
+
+<!-- Overlay for Checkout -->
+<div id="overlay" class="overlay"></div>
+
+<script>
+    let totalPrice = 0;
+    let loggedIn = false;
+
+    function login() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        
+        if (username && password) {
+            loggedIn = true;
+            document.getElementById('loginMessage').textContent = '';
+            showPage('homePage');
+            document.getElementById('products').style.display = 'flex';
+        } else {
+            document.getElementById('loginMessage').textContent = 'Please enter both username and password!';
+        }
+    }
+
+    function addToCart(price) {
+        if (loggedIn) {
+            totalPrice += price;
+            document.getElementById('totalPrice').textContent = totalPrice;
+        } else {
+            alert('Please log in to add items to the cart.');
+        }
+    }
+
+    function showCheckout() {
+        if (loggedIn) {
+            document.getElementById('checkoutTotal').textContent = totalPrice;
+            document.getElementById('checkoutPopup').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        } else {
+            alert('Please log in to checkout.');
+        }
+    }
+
+    function confirmPayment() {
+        const mpesaNumber = document.getElementById('mpesaNumber').value;
+        if (mpesaNumber) {
+            alert('Mpesa confirmation has been sent to ' + mpesaNumber);
+            document.getElementById('checkoutPopup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+            totalPrice = 0;
+            document.getElementById('totalPrice').textContent = totalPrice;
+        } else {
+            alert('Please enter your Mpesa number.');
+        }
+    }
+
+    // Close the popup and overlay if the user clicks outside the popup
+    document.getElementById('overlay').addEventListener('click', function () {
+        document.getElementById('checkoutPopup').style.display = 'none';
+        document.getElementById('overlay').style.display = 'none';
+    });
+
+    function showPage(pageId) {
+        // Hide all pages
+        const pages = document.querySelectorAll('.page');
+        pages.forEach(page => page.classList.remove('active'));
+
+        // Show the selected page
+        document.getElementById(pageId).classList.add('active');
+    }
+</script>
+</body>
+</html>
